@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    consul:
+      port: 8500
+      discovery:
+        hostname: consul-consumer
+      host: 192.168.37.128
+  application:
+    name: consul-consumer
+
+server:
+  port: 2002
+
