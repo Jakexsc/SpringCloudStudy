@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: eureka
+server:
+  port: 1111
+
+eureka: # eureka有两种身份 一种是普通服务 一种是服务注册中心
+  client:
+    register-with-eureka: false # 是否拉取注册信息
+    fetch-registry: false # 是否把当前服务注册到服务注册中心上
+    service-url:
+      defaultZone: fttp://localhost:1111
