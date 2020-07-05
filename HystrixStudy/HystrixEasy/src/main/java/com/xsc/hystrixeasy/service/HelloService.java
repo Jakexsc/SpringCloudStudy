@@ -27,23 +27,28 @@ public class HelloService {
 
     /**
      * 调用provider的hello接口 可能会失败 添加注解 HystrixCommand
+     *
      * @return String
      */
-    @HystrixCommand(fallbackMethod = "error")
+    @HystrixCommand(fallbackMethod = "error", ignoreExceptions = ArithmeticException.class)
     public String hello() {
+        int i = 1 / 0;
         return restTemplate.getForObject("http://eureka-provider/hello", String.class);
     }
 
     /**
      * 该方法名字和 fallbackMethod = "error"一致
+     * Consumer异常 注解方式
+     *
      * @return String
      */
-    public String error() {
-        return "error";
+    public String error(Throwable t) {
+        return "error :" + t.getMessage();
     }
 
     /**
      * 通过注解实现异步调用
+     *
      * @return Future<String>
      */
     @HystrixCommand(fallbackMethod = "error")

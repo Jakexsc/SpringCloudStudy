@@ -42,7 +42,7 @@ public class HelloController {
     /**
      * 继承HystrixCommand
      */
-    @GetMapping("hello2")
+    @GetMapping("/hello2")
     public void hello2() {
         HelloCommand helloCommand = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate);
         //直接执行
@@ -59,11 +59,11 @@ public class HelloController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        System.out.println();
     }
 
     /**
      * 注解的方式异步调用
+     *
      * @return String
      * @throws ExecutionException
      * @throws InterruptedException

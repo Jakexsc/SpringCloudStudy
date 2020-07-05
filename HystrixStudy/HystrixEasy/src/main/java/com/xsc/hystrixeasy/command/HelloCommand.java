@@ -24,15 +24,18 @@ public class HelloCommand extends HystrixCommand<String> {
 
     @Override
     public String run() throws Exception {
+        int i = 1 / 0;
         return restTemplate.getForObject("http://eureka-provider/hello", String.class);
     }
 
     /**
      * 继承容错
+     * Consumer异常 继承方式
+     *
      * @return String
      */
     @Override
     protected String getFallbackMethodName() {
-        return "error";
+        return "error :" + getExecutionException().getMessage();
     }
 }
