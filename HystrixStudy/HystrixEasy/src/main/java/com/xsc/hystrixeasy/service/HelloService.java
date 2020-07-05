@@ -1,8 +1,11 @@
 package com.xsc.hystrixeasy.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.Future;
 
 /**
  * @author JakeXsc
@@ -37,5 +40,19 @@ public class HelloService {
      */
     public String error() {
         return "error";
+    }
+
+    /**
+     * 通过注解实现异步调用
+     * @return Future<String>
+     */
+    @HystrixCommand(fallbackMethod = "error")
+    public Future<String> hello2() {
+        return new AsyncResult<String>() {
+            @Override
+            public String invoke() {
+                return restTemplate.getForObject("http://eureka-provider/hello", String.class);
+            }
+        };
     }
 }

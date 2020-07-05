@@ -58,4 +58,11 @@ public class HelloController {
         }
         System.out.println();
     }
+
+    @GetMapping("/hello3")
+    public String hello3() throws ExecutionException, InterruptedException {
+        Future<String> stringFuture = this.helloService.hello2();
+        String s = stringFuture.get();
+        return s;
+    }
 }
