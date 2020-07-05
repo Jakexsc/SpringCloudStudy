@@ -39,6 +39,9 @@ public class HelloController {
         return this.helloService.hello();
     }
 
+    /**
+     * 继承HystrixCommand
+     */
     @GetMapping("hello2")
     public void hello2() {
         HelloCommand helloCommand = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate);
@@ -59,6 +62,12 @@ public class HelloController {
         System.out.println();
     }
 
+    /**
+     * 注解的方式异步调用
+     * @return String
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @GetMapping("/hello3")
     public String hello3() throws ExecutionException, InterruptedException {
         Future<String> stringFuture = this.helloService.hello2();
