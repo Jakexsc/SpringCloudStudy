@@ -1,6 +1,8 @@
 package com.xsc.hystrixeasy.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCollapser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import commons.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author JakeXsc
@@ -29,9 +32,21 @@ public class UserService {
         this.restTemplate = restTemplate;
     }
 
+
     public List<User> getUserById(List<Integer> ids) {
         User[] users = restTemplate.getForObject("http://eureka-provider/user/{1}", User[].class, StringUtils.join(ids, ","));
         return Arrays.asList(users);
+    }
+
+    @HystrixCommand
+    public List<User> getAnnotationUserByIds(List<Integer> ids) {
+        User[] users = restTemplate.getForObject("http://eureka-provider/user/{1}", User[].class, StringUtils.join(ids, ","));
+        return Arrays.asList(users);
+    }
+
+    @HystrixCollapser(batchMethod = "getAnnotationUserByIds", collapserProperties = {@HystrixProperty(name = "timerDelayInMilliseconds", value = "200")})
+    public Future<User> annotationHystrixCollapser(Integer id) {
+        return null;
     }
 
 }
