@@ -2,6 +2,7 @@ package com.xsc.hystrixeasy.controller;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.xsc.hystrixeasy.command.HelloCommand;
 import com.xsc.hystrixeasy.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +45,20 @@ public class HelloController {
      */
     @GetMapping("/hello2")
     public void hello2() {
-        HelloCommand helloCommand = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate);
+        // 开启缓存
+        HystrixRequestContext hystrixRequestContext = HystrixRequestContext.initializeContext();
+        HelloCommand helloCommand = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate, "xsc");
         //直接执行
         String execute = helloCommand.execute();
         System.out.println(execute);
         try {
-            HelloCommand helloCommand2 = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate);
+            HelloCommand helloCommand2 = new HelloCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("xsc")), restTemplate, "xsc");
             //先入队 后执行
             Future<String> queue = helloCommand2.queue();
             String s = queue.get();
             System.out.println(s);
+            // 缓存关闭
+            hystrixRequestContext.close();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -73,5 +78,25 @@ public class HelloController {
         Future<String> stringFuture = this.helloService.hello2();
         String s = stringFuture.get();
         return s;
+    }
+
+    @GetMapping("/hello4")
+    public void hello4() {
+        HystrixRequestContext ctx = HystrixRequestContext.initializeContext();
+        String xsc = this.helloService.hello3("xsc");
+        xsc = this.helloService.hello3("xsc");
+        ctx.close();
+    }
+
+    @GetMapping("/hello5")
+    public void hello5() {
+        //缓存开始
+        HystrixRequestContext ctx = HystrixRequestContext.initializeContext();
+        String xsc = this.helloService.hello3("xsc");
+        //删除缓存
+        this.helloService.deleteCacheByName("xsc");
+        xsc = this.helloService.hello3("xsc");
+        //缓存结束
+        ctx.close();
     }
 }

@@ -1,6 +1,7 @@
 package com.xsc.hystrixeasy.command;
 
 import com.netflix.hystrix.HystrixCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -10,22 +11,25 @@ import org.springframework.web.client.RestTemplate;
  */
 public class HelloCommand extends HystrixCommand<String> {
     final RestTemplate restTemplate;
+    final String name;
 
     /**
      * 构造器注入 防止循环依赖
      *
      * @param setter
-     * @param restTemplate
+     * @param restTemplate HTTP调用对象
+     * @param name         缓存key
      */
-    public HelloCommand(Setter setter, RestTemplate restTemplate) {
+    @Autowired
+    public HelloCommand(Setter setter, RestTemplate restTemplate, String name) {
         super(setter);
         this.restTemplate = restTemplate;
+        this.name = name;
     }
 
     @Override
     public String run() throws Exception {
-        int i = 1 / 0;
-        return restTemplate.getForObject("http://eureka-provider/hello", String.class);
+        return restTemplate.getForObject("http://eureka-provider/hello2?name={1}", String.class, name);
     }
 
     /**
@@ -37,5 +41,16 @@ public class HelloCommand extends HystrixCommand<String> {
     @Override
     protected String getFallbackMethodName() {
         return "error :" + getExecutionException().getMessage();
+    }
+
+    /**
+     * 继承方式缓存 重写getCacheKey
+     * 得到缓存key
+     *
+     * @return String 缓存的key
+     */
+    @Override
+    protected String getCacheKey() {
+        return name;
     }
 }

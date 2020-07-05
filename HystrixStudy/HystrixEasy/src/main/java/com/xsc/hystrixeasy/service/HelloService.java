@@ -1,6 +1,9 @@
 package com.xsc.hystrixeasy.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -59,5 +62,47 @@ public class HelloService {
                 return restTemplate.getForObject("http://eureka-provider/hello", String.class);
             }
         };
+    }
+
+    /**
+     * 增加 @CacheResult 表示该结果会被缓存 缓存的key就是方法的参数， value是该方法的返回值
+     * 需初始化HystrixRequestContext
+     *
+     * @param name
+     * @return String
+     */
+    @HystrixCommand(fallbackMethod = "error2")
+    @CacheResult
+    public String hello3(String name) {
+        return restTemplate.getForObject("http://eureka-provider/hello2?name={1}", String.class, name);
+    }
+
+    /**
+     * 如果有多个参数 缓存的key则是{name} + {age}
+     * 如果加了@CacheKey 则表示缓存的key以{name}为准
+     *
+     * @param name
+     * @return String
+     */
+    @HystrixCommand(fallbackMethod = "error2")
+    @CacheResult
+    public String hello4(@CacheKey String name, Integer age) {
+        return restTemplate.getForObject("http://eureka-provider/hello2?name={1}", String.class, name, age);
+    }
+
+    /**
+     * 增加@CacheRemove则删除缓存 commandKey是增加缓存的方法名称
+     *
+     * @param name
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "error2")
+    @CacheRemove(commandKey = "hello3")
+    public String deleteCacheByName(@CacheKey String name) {
+        return "删除缓存 key :" + name;
+    }
+
+    public String error2(String name) {
+        return "error2 :" + name;
     }
 }
