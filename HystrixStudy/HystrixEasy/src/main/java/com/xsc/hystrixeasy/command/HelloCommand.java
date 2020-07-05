@@ -26,4 +26,9 @@ public class HelloCommand extends HystrixCommand<String> {
     public String run() throws Exception {
         return restTemplate.getForObject("http://eureka-provider/hello", String.class);
     }
+
+    @Override
+    protected String getFallbackMethodName() {
+        return "error";
+    }
 }
