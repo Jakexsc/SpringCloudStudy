@@ -30,3 +30,6 @@ feign:
     # 数据压缩响应
     response:
       enabled: true
+  # 开启服务降级
+  hystrix:
+    enabled: true
