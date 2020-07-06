@@ -9,3 +9,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka
+
+#ø™∆ÙDebug»’÷æ
+logging:
+  level:
+    com:
+      xsc:
+        feignhello:
+          service: debug
