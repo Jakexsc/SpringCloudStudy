@@ -17,3 +17,16 @@ logging:
       xsc:
         feignhello:
           service: debug
+
+feign:
+  compression:
+    # 请求数据压缩
+    request:
+      enabled: true
+      # 数据压缩的类型
+      mime-types: appliaction/json,text/html
+      # 当数据大于2048才进行数据压缩
+      min-request-size: 2048
+    # 数据压缩响应
+    response:
+      enabled: true
