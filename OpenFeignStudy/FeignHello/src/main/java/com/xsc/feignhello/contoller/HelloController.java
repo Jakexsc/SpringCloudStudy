@@ -2,15 +2,9 @@ package com.xsc.feignhello.contoller;
 
 import com.xsc.feignhello.service.HelloService;
 import commons.User;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Name;
-import javax.ws.rs.GET;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
@@ -24,6 +18,7 @@ public class HelloController {
 
     /**
      * 构造器注入 防止循环依赖
+     *
      * @param helloService openfeign逻辑层
      */
     public HelloController(HelloService helloService) {

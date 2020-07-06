@@ -1,7 +1,7 @@
 package com.xsc.eurekaprovider.controller;
 
+import com.xsc.api.IUserApi;
 import commons.User;
-import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +15,11 @@ import java.util.Date;
  * @date 2020/6/30 23:25
  */
 @RestController
-public class HelloController {
+public class HelloController implements IUserApi {
     @Value("${server.port}")
     Integer port;
 
-    @GetMapping("/hello")
+    @Override
     public String hello() {
         return "hello xsc:" + port;
     }
@@ -30,7 +30,7 @@ public class HelloController {
      * @param name
      * @return String
      */
-    @GetMapping("/hello2")
+    @Override
     public String hello2(String name) {
         System.out.println(new Date() + ": " + name);
         return "hello :" + name;
@@ -41,10 +41,9 @@ public class HelloController {
         return user;
     }
 
-    @PostMapping("addUser2")
-    public User addUser2(@RequestBody User user) {
+    @Override
+    public void addUser2(@RequestBody User user) {
         System.out.println(user);
-        return user;
     }
 
     @PutMapping("updateUser1")
@@ -62,13 +61,13 @@ public class HelloController {
         System.out.println(id);
     }
 
-    @DeleteMapping("/deleteUser2/{id}")
+    @Override
     public void deleteUser2(@PathVariable Integer id) {
         System.out.println(id);
     }
 
-    @GetMapping("/hello3")
-    public void getUserByName(@RequestHeader String name) throws UnsupportedEncodingException {
+    @Override
+    public void hello3(@RequestHeader String name) throws UnsupportedEncodingException {
         System.out.println(URLDecoder.decode(name, "UTF-8"));
     }
 
