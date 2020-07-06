@@ -1,9 +1,12 @@
 package com.xsc.eurekaprovider.controller;
 
 import commons.User;
+import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 /**
@@ -40,6 +43,7 @@ public class HelloController {
 
     @PostMapping("addUser2")
     public User addUser2(@RequestBody User user) {
+        System.out.println(user);
         return user;
     }
 
@@ -62,4 +66,11 @@ public class HelloController {
     public void deleteUser2(@PathVariable Integer id) {
         System.out.println(id);
     }
+
+    @GetMapping("/hello3")
+    public void getUserByName(@RequestHeader String name) throws UnsupportedEncodingException {
+        System.out.println(URLDecoder.decode(name, "UTF-8"));
+    }
+
+
 }
