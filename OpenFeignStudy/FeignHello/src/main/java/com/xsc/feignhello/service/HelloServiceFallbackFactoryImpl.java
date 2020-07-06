@@ -2,6 +2,7 @@ package com.xsc.feignhello.service;
 
 import commons.User;
 import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 
@@ -10,6 +11,7 @@ import java.io.UnsupportedEncodingException;
  * @version 1.0
  * @date 2020/7/7 0:10
  */
+@Component
 public class HelloServiceFallbackFactoryImpl implements FallbackFactory<HelloService> {
     @Override
     public HelloService create(Throwable throwable) {
