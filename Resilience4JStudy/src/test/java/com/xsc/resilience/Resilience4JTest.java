@@ -3,11 +3,15 @@ package com.xsc.resilience;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.vavr.CheckedFunction0;
+import io.vavr.CheckedRunnable;
 import io.vavr.control.Try;
 import org.junit.Test;
 
 import java.time.Duration;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,5 +67,26 @@ public class Resilience4JTest {
                 .map(v -> v + "hello world");
         System.out.println(result.isSuccess());
         System.out.println(result.get());
+    }
+
+    @Test
+    public void test3() {
+        RateLimiterConfig config = RateLimiterConfig.custom()
+                // 阈值刷新的时间
+                .limitRefreshPeriod(Duration.ofMillis(1000))
+                // 阈值刷新的频次(每秒处理几个请求)
+                .limitForPeriod(4)
+                // 限流之后的冷却时间
+                .timeoutDuration(Duration.ofMillis(1000))
+                .build();
+        RateLimiter rateLimiter = RateLimiter.of("xsc", config);
+        CheckedRunnable checkedRunnable = RateLimiter.decorateCheckedRunnable(rateLimiter, () -> {
+            System.out.println(new Date());
+        });
+        Try.run(checkedRunnable)
+                .andThenTry(checkedRunnable)
+                .andThenTry(checkedRunnable)
+                .andThenTry(checkedRunnable)
+                .onFailure((Throwable t) -> System.out.println(t.getMessage()));
     }
 }
