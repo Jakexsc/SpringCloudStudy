@@ -21,6 +21,8 @@ public class HelloController implements IUserApi {
 
     @Override
     public String hello() {
+        System.out.println("hello xsc:" + port);
+        int i = 1 / 0;
         return "hello xsc:" + port;
     }
 

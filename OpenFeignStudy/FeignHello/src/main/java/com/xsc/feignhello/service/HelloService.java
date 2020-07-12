@@ -2,6 +2,7 @@ package com.xsc.feignhello.service;
 
 import com.xsc.api.IUserApi;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Repository;
 
 /**
  * 两种方式 一种是定义一个HelloServiceFallbackImpl 然后增加属性 fallback = HelloServiceFallbackImpl.class
@@ -12,5 +13,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @date 2020/7/6 22:10
  */
 @FeignClient(value = "eureka-provider", fallbackFactory = HelloServiceFallbackFactoryImpl.class)
+@Repository
 public interface HelloService extends IUserApi {
 }

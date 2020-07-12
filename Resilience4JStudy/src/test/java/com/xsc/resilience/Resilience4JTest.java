@@ -38,7 +38,7 @@ public class Resilience4JTest {
         CircuitBreaker circuitBreaker = registry.circuitBreaker("xsc");
         CheckedFunction0<String> supplier = CircuitBreaker.decorateCheckedSupplier(circuitBreaker, () -> "hello resilience4j");
         Try<String> result = Try.of(supplier)
-                .map(v -> v + "hello world");
+                .map((String s) -> s + "hello world");
         System.out.println(result.isSuccess());
         System.out.println(result.get());
     }
