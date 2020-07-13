@@ -23,7 +23,7 @@ public class UserService {
     final RestTemplate restTemplate;
 
     /**
-     * 构造器注入 防止循环依赖
+     * 构造器注入 防止依赖为空
      *
      * @param restTemplate http调用对象
      */

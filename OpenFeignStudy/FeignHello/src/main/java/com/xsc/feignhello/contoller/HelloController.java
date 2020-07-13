@@ -17,7 +17,7 @@ public class HelloController {
     final HelloService helloService;
 
     /**
-     * 构造器注入 防止循环依赖
+     * 构造器注入 防止依赖为空
      *
      * @param helloService openfeign逻辑层
      */

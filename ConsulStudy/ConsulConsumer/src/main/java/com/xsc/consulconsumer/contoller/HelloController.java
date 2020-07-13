@@ -17,7 +17,7 @@ public class HelloController {
     final RestTemplate restTemplate;
 
     /**
-     * 依赖注入 防止循环依赖
+     * 依赖注入 防止依赖为空
      * @param loadBalancerClient
      * @param restTemplate
      */

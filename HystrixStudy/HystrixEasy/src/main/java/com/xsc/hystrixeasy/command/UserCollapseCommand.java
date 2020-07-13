@@ -21,7 +21,7 @@ public class UserCollapseCommand extends HystrixCollapser<List<User>, User, Inte
     final UserService userService;
 
     /**
-     * 构造器注入 防止循环依赖
+     * 构造器注入 防止依赖为空
      *
      * @param id
      * @param userService user业务逻辑层
