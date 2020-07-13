@@ -1,5 +1,3 @@
-
-
 server:
   port: 5000
 
@@ -22,6 +20,16 @@ resilience4j:
         exponentialBackoffMultiplier: 1.1
         retryExceptions:
           - java.lang.RuntimeException
+  circuitbreaker:
+    instances:
+      cbA:
+        ringBufferSizeInClosedState: 5
+        ringBUfferSizeInHalfOpenState: 3
+        waitInterval: 5000
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+    circuit-breaker-aspect-order: 398
+
 spring:
   application:
     name: resilience4j-web
