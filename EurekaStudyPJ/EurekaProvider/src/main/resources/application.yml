@@ -11,6 +11,9 @@ resilience4j:
   ratelimiter:
     limiters:
       rlA:
+        # 每次处理几个请求
         limit-for-period: 1
+        # 刷新的时间
         limit-refresh-period: 1000
+        # 冷却时间
         timeout-duration: 1000
