@@ -26,8 +26,12 @@ public class HelloService {
     }
 
     public String hello() {
-        return this.restTemplate.getForObject("http://localhost:1113/hello", String.class);
+        for (int i = 0; i < 5; i++) {
+            this.restTemplate.getForObject("http://localhost:1113/hello", String.class);
+        }
+        return "success";
     }
+
     public String error(Throwable throwable) {
         return "error";
     }

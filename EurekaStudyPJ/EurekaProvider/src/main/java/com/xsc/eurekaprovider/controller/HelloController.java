@@ -2,6 +2,7 @@ package com.xsc.eurekaprovider.controller;
 
 import com.xsc.api.IUserApi;
 import commons.User;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ public class HelloController implements IUserApi {
     Integer port;
 
     @Override
+    @RateLimiter(name = "rlA")
     public String hello() {
-        System.out.println("hello xsc:" + port);
-        int i = 1 / 0;
+        System.out.println(new Date());
         return "hello xsc:" + port;
     }
 
