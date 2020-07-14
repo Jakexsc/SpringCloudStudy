@@ -1,0 +1,19 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka
+
+server:
+  port: 2020
+
+spring:
+  application:
+    name: Zuul-HelloWorld
+
+zuul:
+  routes:
+    # 简化下面两行配置
+    eureka-provider: /xsc-a/**
+#    xsc-a:
+#      path: /xsc-a/**
+#      serviceId: eureka-provider
