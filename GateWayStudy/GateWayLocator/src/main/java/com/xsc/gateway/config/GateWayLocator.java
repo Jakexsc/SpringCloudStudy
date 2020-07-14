@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class GateWayLocator {
-    @Bean
-    RouteLocator routeLocator(RouteLocatorBuilder builder) {
-        return builder
-                .routes()
-                .route("xsc-a", (PredicateSpec p) -> p.path("/get").uri("http://httpbin.org"))
-                .build();
-    }
+//    @Bean
+//    RouteLocator routeLocator(RouteLocatorBuilder builder) {
+//        return builder
+//                .routes()
+//                .route("xsc-a", (PredicateSpec p) -> p.path("/get").uri("http://httpbin.org"))
+//                .build();
+//    }
 }
