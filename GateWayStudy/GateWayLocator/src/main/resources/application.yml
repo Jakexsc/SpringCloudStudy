@@ -5,7 +5,12 @@ spring:
         - id: xsc
           uri: http://httpbin.org
           predicates:
-            - Path=/get
+            # 有参数name 且参数为java开始的则转发
+#            - Query=name,java.*
+#            - Method=GET
+            # 在某个时间点之后
+#            - After=2020-01-01T01:01:01+08:00[Asia/Shanghai]
+#            - Path=/get
       discovery:
         locator:
           enabled: true
