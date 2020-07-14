@@ -3,11 +3,15 @@ spring:
     gateway:
       routes:
         - id: xsc
-          uri: http://httpbin.org
+          # 加了lb 如果provider有多个实例则自动负载均衡
+          uri: lb://eureka-provider
+          filters:
+            # 自动给name 赋值
+            - AddRequestParameter=name,xsc
           predicates:
             # 有参数name 且参数为java开始的则转发
 #            - Query=name,java.*
-#            - Method=GET
+            - Method=GET
             # 在某个时间点之后
 #            - After=2020-01-01T01:01:01+08:00[Asia/Shanghai]
 #            - Path=/get
