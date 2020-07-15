@@ -1,4 +1,11 @@
-# 密钥
-encrypt:
-  key: xsc1
+# 对称加密 - 密钥
+#encrypt:
+#  key: xsc1
 
+#非对称加密
+encrypt:
+  key-store:
+    location: config-server.keystore
+    alias: config-server
+    password: chen-980426
+    secret: chen-980426

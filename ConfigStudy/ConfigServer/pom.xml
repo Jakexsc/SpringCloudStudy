@@ -55,6 +55,17 @@
     </dependencyManagement>
 
     <build>
+        <!-- 添加节点 防止被过滤 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.keystore</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -62,5 +73,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
