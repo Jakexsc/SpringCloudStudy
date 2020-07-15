@@ -9,3 +9,10 @@ encrypt:
     alias: config-server
     password: chen-980426
     secret: chen-980426
+
+# 对服务中心进行安全管理
+spring:
+  security:
+    user:
+      name: xsca
+      password: chen2964

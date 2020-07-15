@@ -6,6 +6,8 @@ spring:
       profile: dev
       label: master
       uri: http://localhost:8081
+      username: xsca
+      password: chen2964
 
 server:
   port: 8082
