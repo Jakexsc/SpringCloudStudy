@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # 配置仓库地址
+          uri: https://github.com/Jakexsc/CloudConfigStudy.git
+          # 配置文件的目录
+          search-paths: client1
+
+server:
+  port: 8081
+
