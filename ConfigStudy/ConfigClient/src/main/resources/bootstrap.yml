@@ -3,11 +3,19 @@ spring:
     name: client1
   cloud:
     config:
-      profile: dev
+      profile: test
       label: master
-      uri: http://localhost:8081
+#      uri: http://localhost:8081
       username: xsca
       password: chen2964
-
+      discovery:
+        # 开启eureka获取configServer的功能
+        enabled: true
+        # configServer的Id
+        service-id: config-server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka
 server:
   port: 8082

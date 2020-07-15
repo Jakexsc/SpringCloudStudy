@@ -5,8 +5,8 @@
 #非对称加密
 encrypt:
   key-store:
-    location: config-server.keystore
-    alias: config-server
+    location: classpath:config-server.jks
+    alias: mytestkey
     password: chen-980426
     secret: chen-980426
 
