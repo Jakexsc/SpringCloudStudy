@@ -10,8 +10,14 @@ encrypt:
     password: chen-980426
     secret: chen-980426
 
-# 对服务中心进行安全管理
+# 配置rabbitMq
 spring:
+  rabbitmq:
+    port: 5672
+    host: 192.168.37.128
+    username: guest
+    password: guest
+  # 对服务中心进行安全管理
   security:
     user:
       name: xsca

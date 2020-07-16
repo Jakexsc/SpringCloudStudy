@@ -6,8 +6,8 @@ spring:
       profile: test
       label: master
 #      uri: http://localhost:8081
-#      username: xsca
-#      password: chen2964
+      username: xsca
+      password: chen2964
       discovery:
         # 开启eureka获取configServer的功能
         enabled: true
@@ -24,6 +24,11 @@ spring:
         multiplier: 1.1
         # 最大间隔时间
         max-interval: 2000
+  rabbitmq:
+    port: 5672
+    host: 192.168.37.128
+    username: guest
+    password: guest
 eureka:
   client:
     service-url:
@@ -35,6 +40,8 @@ management:
     web:
       exposure:
         include: refresh
+
+
 
 
 
