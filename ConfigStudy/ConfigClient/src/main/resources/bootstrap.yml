@@ -6,16 +6,35 @@ spring:
       profile: test
       label: master
 #      uri: http://localhost:8081
-      username: xsca
-      password: chen2964
+#      username: xsca
+#      password: chen2964
       discovery:
         # 开启eureka获取configServer的功能
         enabled: true
         # configServer的Id
         service-id: config-server
+      # 开启失败快速响应
+      fail-fast: true
+      retry:
+        # 请求重试的初识间隔时间
+        initial-interval: 1000
+        # 最大重新次数
+        max-attempts: 6
+        # 重试时间间隔乘数
+        multiplier: 1.1
+        # 最大间隔时间
+        max-interval: 2000
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka
 server:
   port: 8082
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
+
+
