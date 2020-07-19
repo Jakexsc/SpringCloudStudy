@@ -9,5 +9,8 @@ spring:
       bindings:
         xsc-input:
           destination: xsc-topic
+          # 添加分组消息只被一个实例消费
+          group: g1
         xsc-output:
           destination: xsc-topic
+          group: g1
