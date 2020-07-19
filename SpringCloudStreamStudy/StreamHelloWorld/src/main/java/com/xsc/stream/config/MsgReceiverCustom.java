@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
+import java.util.Date;
+
 /**
  * @author JakeXsc
  * @version 1.0
@@ -16,6 +18,6 @@ public class MsgReceiverCustom {
 
     @StreamListener(MyChannel.INPUT)
     public void receiver(Object payload) {
-        logger.info("Receiver:" + payload);
+        logger.info("Receiver:" + payload + ":" + new Date());
     }
 }
