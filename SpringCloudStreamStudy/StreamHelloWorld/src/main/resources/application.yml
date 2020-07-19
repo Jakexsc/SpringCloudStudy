@@ -4,3 +4,10 @@ spring:
     port: 5672
     username: guest
     password: guest
+  cloud:
+    stream:
+      bindings:
+        xsc-input:
+          destination: xsc-topic
+        xsc-output:
+          destination: xsc-topic
