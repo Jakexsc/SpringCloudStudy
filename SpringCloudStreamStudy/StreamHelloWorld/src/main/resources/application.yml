@@ -11,6 +11,18 @@ spring:
           destination: xsc-topic
           # 添加分组消息只被一个实例消费
           group: g1
+          consumer:
+            # 开启分区(消费者上配置)
+            partitioned: true
         xsc-output:
           destination: xsc-topic
           group: g1
+          producer:
+            # 消费端的节点数量(生产者上配置)
+            partitionCount: 2
+            # 表示被下标为1的消费(生产者上配置)
+            partitionKeyExpression: payload
+      # 消费者实例个数(消费者上配置)
+      instance-count: 2
+      # 当前实例的下标(消费者上配置)
+      instance-index: 0
