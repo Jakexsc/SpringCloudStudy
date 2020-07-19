@@ -20,7 +20,7 @@ spring:
           producer:
             # 消费端的节点数量(生产者上配置)
             partitionCount: 2
-            # 表示被下标为1的消费(生产者上配置)
+            # 根据实际的输出消息规则来配置SpEL来生成合适的分区键(生产者上配置)
             partitionKeyExpression: payload
       # 消费者实例个数(消费者上配置)
       instance-count: 2
