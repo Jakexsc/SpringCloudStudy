@@ -1,8 +1,9 @@
 package com.xsc.sleuth.controller;
 
+import com.xsc.sleuth.service.HelloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -15,8 +16,18 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final HelloService helloService;
+
+    /**
+     * @param restTemplate 调用对象
+     * @param helloService
+     */
+    public HelloController(RestTemplate restTemplate, HelloService helloService) {
+        this.restTemplate = restTemplate;
+        this.helloService = helloService;
+    }
+
     @GetMapping("/hello")
     public String hello() {
         logger.info("hello spring cloud sleuth");
@@ -35,5 +46,16 @@ public class HelloController {
         logger.info("hello3");
         Thread.sleep(500);
         return "hello3";
+    }
+
+    /**
+     * 异步任务是单独的spanId
+     *
+     * @return String
+     */
+    @GetMapping("/hello4")
+    public String hello4() {
+        logger.info("hello4");
+        return this.helloService.backGroundFun();
     }
 }
