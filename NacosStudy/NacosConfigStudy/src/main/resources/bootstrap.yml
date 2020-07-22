@@ -1,0 +1,9 @@
+spring:
+  application:
+    # 对应Nacos配置名字
+    name: nacos-config
+  cloud:
+    nacos:
+      server-addr: 192.168.37.128:8848
+      config:
+        file-extension: yml
