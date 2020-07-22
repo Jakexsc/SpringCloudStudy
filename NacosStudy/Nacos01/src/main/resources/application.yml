@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: nacos01
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.37.128:8848
+
+server:
+  port: 9000
