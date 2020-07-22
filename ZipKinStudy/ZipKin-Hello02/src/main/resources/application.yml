@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: Zinkin-Hello02
+  zipkin:
+    sender:
+      type: rabbit
+    base-url: http://192.168.37.128
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1
+  rabbitmq:
+    host: 192.168.37.128
+    port: 5672
+    username: guest
+    password: guest
+server:
+  port: 8081
